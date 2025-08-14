@@ -1,0 +1,59 @@
+{
+  "info": {
+    "name": "Credits API",
+    "_postman_id": "5a5c0c4d-02c2-4f7c-8a2e-credits-api",
+    "description": "Postman collection for Credit Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://127.0.0.1:8000" },
+    { "key": "adminToken", "value": "please_change_me" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/health" }
+    },
+    {
+      "name": "Get Balance (user_id=1)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/credits/1" }
+    },
+    {
+      "name": "Add Credits (user_id=1)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/credits/1/add",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"amount\": 10\n}" }
+      }
+    },
+    {
+      "name": "Deduct Credits (user_id=1)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/credits/1/deduct",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"amount\": 5\n}" }
+      }
+    },
+    {
+      "name": "Reset Credits (user_id=1)",
+      "request": { "method": "PATCH", "url": "{{baseUrl}}/api/credits/1/reset" }
+    },
+    {
+      "name": "Schema Update (admin)",
+      "request": {
+        "method": "PATCH",
+        "url": "{{baseUrl}}/api/schema/update",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-Admin-Token", "value": "{{adminToken}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sql\": \"-- example: add index\\nCREATE INDEX IF NOT EXISTS idx_users_email ON users(email);\"\n}"
+        }
+      }
+    }
+  ]
+}
